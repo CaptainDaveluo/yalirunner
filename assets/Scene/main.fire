@@ -595,10 +595,10 @@
     "starPreb": {
       "__uuid__": "941e16d2-746d-43cb-ae72-b31ef0ac9a48"
     },
-    "monsterPreb": {
-      "__uuid__": "ec275978-67f7-4071-b68e-f6ebe7f744fb"
+    "lurkerPreb": {
+      "__uuid__": "fa228e2a-9b1a-4d89-86fc-3cbbca17df6d"
     },
-    "starCreateDuration": 3,
+    "starCreateDuration": 2,
     "floor": {
       "__id__": 5
     },

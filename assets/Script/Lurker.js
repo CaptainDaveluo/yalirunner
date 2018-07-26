@@ -22,12 +22,30 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {},
-
+    getPlayerDistance: function () {
+        // 根据 player 节点位置判断距离
+        var playerPos = this.game.player.getPosition();
+        // 根据两点位置计算两点之间距离
+        var dist = cc.pDistance(this.node.position, playerPos);
+        return dist;
+    },
+    onPicked: function() {
+        //this.game.stopAllActions();
+        cc.director.loadScene('menu');
+    },
     start () {
 
     },
 
     update (dt) {
       this.node.x -= 5;
+      console.log("location:"+this.getPlayerDistance());
+      if(this.getPlayerDistance() < this.touchRadius){
+        this.onPicked();
+        return;
+      }
+      if(this.node.x < this.game.player.x - 100){
+        this.node.destroy();
+      }
     },
 });
