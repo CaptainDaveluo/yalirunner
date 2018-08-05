@@ -19,3 +19,4 @@ IDE：Cocos Creator + 任意js开发工具
 ###核心资源素材，大家可以上传有趣的资源
 
 ###联系QQ：1007909850
+![游戏封面](https://github.com/CaptainDaveluo/yalirunner/blob/master/facepic.jpg)
