@@ -19,14 +19,23 @@ cc.Class({
         player:{
           default: null,
           type: cc.Node
-        }
+        },
+        scoreDisplay:{
+          default: null,
+          type: cc.Label
+        },
+        score:0,
+        speed:5,
+        gameStatus: "started"
     },
 
     // use this for initialization
     onLoad: function () {
       this.groundY = this.player.y;
       this.timer = 0;
+      this.speed = 5;
       this.generateStarGroup();
+      this.gameStatus = "started";
     },
 
     //生成一组星星
@@ -81,17 +90,22 @@ cc.Class({
 
     // called every frame
     update: function (dt) {
-      if (this.timer > this.starCreateDuration) {
+      if (this.timer > this.starCreateDuration && this.gameStatus == "started") {
           this.timer=0;
           //this.spawnNewStar();
+          if(this.score%100==0){   //不断增加游戏速度
+            this.speed +=1;
+          }
+          this.score += Math.ceil(dt*this.speed*2);
+          this.scoreDisplay.string=""+this.score;
           if(this.restStar>0){
             this.spawnNewStar();
             this.restStar -- ;
           }else{
             this.spawnNewLurker();
             this.spawnNewStar(35);
-            var willNextBeLurker = (10 * cc.random0To1())>3?true:false;
-            if(willNextBeLurker){
+            var willNextBeLurker = (10 * cc.random0To1())>8?true:false;
+            if(!willNextBeLurker){
               this.generateStarGroup();
             }
           }
@@ -99,4 +113,10 @@ cc.Class({
       }
       this.timer += dt*5;
     },
+
+    gameOver: function() {
+      var playrAnim = this.player.getComponent(cc.Animation);
+      playrAnim.pause();
+      this.gameStatus = "stoped";
+    }
 });

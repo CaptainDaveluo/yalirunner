@@ -21,9 +21,17 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+   onLoad () {
+     var anim = this.getComponent(cc.Animation);
+     anim.play('player_run');
+   },
 
     start () {
+    },
+
+    pause(){
+      var anim = this.getComponent(cc.Animation);
+      anim.pause();
     },
 
 

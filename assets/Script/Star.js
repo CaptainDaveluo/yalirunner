@@ -37,13 +37,15 @@ cc.Class({
     },
 
     update (dt) {
-      this.node.x -= 5;
-      if(this.getPlayerDistance() < this.pickRadius){
-        this.onPicked();
-        return;
-      }
-      if(this.node.x < this.game.player.x - 100){
-        this.node.destroy();
+      if(this.game.gameStatus == "started"){
+        this.node.x -= this.game.speed;
+        if(this.getPlayerDistance() < this.pickRadius){
+          this.onPicked();
+          return;
+        }
+        if(this.node.x < this.game.player.x - 100){
+          this.node.destroy();
+        }
       }
     },
 });

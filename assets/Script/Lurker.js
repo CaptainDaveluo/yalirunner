@@ -30,22 +30,24 @@ cc.Class({
         return dist;
     },
     onPicked: function() {
-        //this.game.stopAllActions();
-        cc.director.loadScene('menu');
+        this.game.gameOver();
+        //cc.director.loadScene('menu');
     },
     start () {
 
     },
 
     update (dt) {
-      this.node.x -= 5;
-      console.log("location:"+this.getPlayerDistance());
-      if(this.getPlayerDistance() < this.touchRadius){
-        this.onPicked();
-        return;
-      }
-      if(this.node.x < this.game.player.x - 100){
-        this.node.destroy();
+      if(this.game.gameStatus == "started"){
+        this.node.x -= this.game.speed;
+        console.log("location:"+this.getPlayerDistance());
+        if(this.getPlayerDistance() < this.touchRadius){
+          this.onPicked();
+          return;
+        }
+        if(this.node.x < this.game.player.x - 100){
+          this.node.destroy();
+        }
       }
     },
 });

@@ -38,6 +38,7 @@ cc.Class({
     },
     onGameStart :function(event, customEventData){
       cc.director.loadScene("main");
+      this.destroy();
     }
 
     // update (dt) {},
