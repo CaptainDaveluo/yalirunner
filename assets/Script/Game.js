@@ -26,7 +26,11 @@ cc.Class({
         },
         score:0,
         speed:5,
-        gameStatus: "started"
+        gameStatus: "started",
+        gameOverWindow:{
+          default: null,
+          type: cc.Node
+        },
     },
 
     // use this for initialization
@@ -36,6 +40,7 @@ cc.Class({
       this.speed = 5;
       this.generateStarGroup();
       this.gameStatus = "started";
+      this.gameOverWindow.active = false;
     },
 
     //生成一组星星
@@ -118,5 +123,8 @@ cc.Class({
       var playrAnim = this.player.getComponent(cc.Animation);
       playrAnim.pause();
       this.gameStatus = "stoped";
+      this.gameOverWindow.active = true;
+      var gameOverWindow = this.gameOverWindow.getComponent('GameOverWindow');
+      gameOverWindow.final_score = this.score;
     }
 });
