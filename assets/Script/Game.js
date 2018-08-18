@@ -124,6 +124,8 @@ cc.Class({
       playrAnim.pause();
       this.gameStatus = "stoped";
       this.gameOverWindow.active = true;
+      var player = this.player.getComponent('Player');
+      player.canJump = false;
       var gameOverWindow = this.gameOverWindow.getComponent('GameOverWindow');
       gameOverWindow.final_score = this.score;
     }

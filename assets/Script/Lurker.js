@@ -40,7 +40,6 @@ cc.Class({
     update (dt) {
       if(this.game.gameStatus == "started"){
         this.node.x -= this.game.speed;
-        console.log("location:"+this.getPlayerDistance());
         if(this.getPlayerDistance() < this.touchRadius){
           this.onPicked();
           return;

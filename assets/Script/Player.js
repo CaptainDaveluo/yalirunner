@@ -16,7 +16,8 @@ cc.Class({
         awordSpeed:0,   //前进速度
         accel:0,        //加速度
         baseLine:237,   //初始位置
-        jumpCount:0     //跳跃计数
+        jumpCount:0,     //跳跃计数
+        canJump:true,    //能否跳跃  
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -24,20 +25,16 @@ cc.Class({
    onLoad () {
      var anim = this.getComponent(cc.Animation);
      anim.play('player_run');
+     this.canJump = true;
    },
 
     start () {
     },
 
-    pause(){
-      var anim = this.getComponent(cc.Animation);
-      anim.pause();
-    },
-
 
     jump:function(){
       var node = this.node;
-      if(this.jumpCount<2){
+      if(this.jumpCount<2 && this.canJump == true){
         this.upSpeed = 10;
         this.accel=-25;
         this.jumpCount++;

@@ -25,17 +25,14 @@ cc.Class({
     // onLoad () {},
 
     start () {
-      this.timer = 0;
-      this.final_score=0;
       this.shown_score=0;
     },
 
-    update (dt) {
-      if(this.final_score > 0 && this.shown_score<this.final_score && this.timer%10 == 0){
+    update (dt) {  
+      if(this.final_score > 0 && this.shown_score<this.final_score){
         this.shown_score++;
         this.scoreDisplay.string = ""+this.shown_score;
       }
-      this.timer++;
     },
     onBackToMenu: function(event, customEventData){
       cc.director.loadScene("menu");
