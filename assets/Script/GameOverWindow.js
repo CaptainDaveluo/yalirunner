@@ -37,4 +37,7 @@ cc.Class({
     onBackToMenu: function(event, customEventData){
       cc.director.loadScene("menu");
     },
+    onTryAgainTapped: function(exent, customEventData){
+      cc.director.loadScene("main");
+    },
 });

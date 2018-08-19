@@ -375,7 +375,8 @@
     "awordSpeed": 0,
     "accel": 0,
     "baseLine": -83,
-    "jumpCount": 0
+    "jumpCount": 0,
+    "canJump": true
   },
   {
     "__type__": "cc.Animation",
@@ -712,17 +713,17 @@
         "__id__": 26
       },
       {
-        "__id__": 29
+        "__id__": 30
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 31
+        "__id__": 32
       },
       {
-        "__id__": 32
+        "__id__": 33
       }
     ],
     "_prefab": null,
@@ -1026,7 +1027,11 @@
     },
     "duration": 0.1,
     "zoomScale": 1.2,
-    "clickEvents": [],
+    "clickEvents": [
+      {
+        "__id__": 29
+      }
+    ],
     "_N$interactable": true,
     "_N$enableAutoGrayEffect": false,
     "_N$normalColor": {
@@ -1066,6 +1071,15 @@
     }
   },
   {
+    "__type__": "cc.ClickEvent",
+    "target": {
+      "__id__": 21
+    },
+    "component": "GameOverWindow",
+    "handler": "onTryAgainTapped",
+    "customEventData": ""
+  },
+  {
     "__type__": "cc.Node",
     "_name": "final_score",
     "_objFlags": 0,
@@ -1077,7 +1091,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 30
+        "__id__": 31
       }
     ],
     "_prefab": null,
@@ -1122,7 +1136,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 29
+      "__id__": 30
     },
     "_enabled": true,
     "_useOriginalSize": false,
@@ -1176,7 +1190,7 @@
     },
     "_enabled": true,
     "scoreDisplay": {
-      "__id__": 30
+      "__id__": 31
     },
     "final_score": 0,
     "shown_score": 0
