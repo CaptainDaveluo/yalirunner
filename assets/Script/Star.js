@@ -28,14 +28,23 @@ cc.Class({
         return dist;
     },
     onPicked: function() {
+        this.game.restStar--;
         this.node.destroy();
     },
     // onLoad () {},
-
     start () {
 
     },
-
+    meetLurkerPicked:function(pos){
+      for(var i=0;i<this.game.lurkers.size();i++){
+        var lurkerPos = this.game.lurkers.get(i).getPosition();
+        var dist = cc.pDistance(pos, lurkerPos);
+        if(dist<80){
+          return true;
+        }
+      }
+      return false;
+    },
     update (dt) {
       if(this.game.gameStatus == "started"){
         this.node.x -= this.game.speed;
@@ -43,7 +52,11 @@ cc.Class({
           this.onPicked();
           return;
         }
+        if(this.game.lurkers.size()>0 && this.meetLurkerPicked(this.node.position)){
+          this.onPicked();
+        }
         if(this.node.x < this.game.player.x - 100){
+          this.game.restStar--;
           this.node.destroy();
         }
       }

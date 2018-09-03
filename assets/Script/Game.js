@@ -1,6 +1,5 @@
 cc.Class({
     extends: cc.Component,
-
     properties: {
         // defaults, set visually when attaching this script to the Canvas
         starPreb:{
@@ -30,23 +29,52 @@ cc.Class({
         gameOverWindow:{
           default: null,
           type: cc.Node
-        },
+        }
     },
 
     // use this for initialization
     onLoad: function () {
+      var Queue = require('Queue');
+      this.lurkers = new Queue();
       this.groundY = this.player.y;
       this.timer = 0;
       this.speed = 5;
-      this.generateStarGroup();
+      this.spanTrapezoidStar(10);
       this.gameStatus = "started";
       this.gameOverWindow.active = false;
     },
 
-    //生成一组星星
-    generateStarGroup:function(){
-      var starNum = 10 + cc.random0To1()*5;
-      this.restStar = Math.floor(starNum);
+    
+    ////TODO 此部分冗余代码需要重构
+    //生成三角形的星星
+    spanTrapezoidStar: function(number){
+      this.restStar = 0;
+      for(var i=0;i<5;i++){
+        for(var j=i;j<number-i;j++){
+          var newStar = cc.instantiate(this.starPreb);
+          this.node.addChild(newStar);
+          newStar.getComponent('Star').game = this;
+          var starX = this.node.width/2 - 50 + j * 80;
+          var starY = this.groundY + i * 45;
+          newStar.setPosition(cc.p(starX,starY));
+          this.restStar++;
+        }
+      }
+    },
+    //生成长方形的星星
+    spanSquareStar: function(number){
+      this.restStar = 0;
+      for(var i=0;i<5;i++){
+        for(var j=0;j<number;j++){
+          var newStar = cc.instantiate(this.starPreb);
+          this.node.addChild(newStar);
+          newStar.getComponent('Star').game = this;
+          var starX = this.node.width/2 - 50 + j * 80;
+          var starY = this.groundY + i * 45;
+          newStar.setPosition(cc.p(starX,starY));
+          this.restStar++;
+        }
+      }
     },
 
     spawnNewStar: function(offsetY) {
@@ -60,6 +88,7 @@ cc.Class({
         else
           newStar.setPosition(this.getNewStarPosition());
     },
+
     spawnNewLurker: function() {
         // 使用给定的模板在场景中生成一个新节点
         var newLurker = cc.instantiate(this.lurkerPreb);
@@ -67,7 +96,10 @@ cc.Class({
         this.node.addChild(newLurker);
         newLurker.getComponent('Lurker').game = this;
         newLurker.setPosition(this.getNewLurkerPosition());
+        this.lurkers.push(newLurker);
+        this.lurkers.printf();
     },
+
     getNewLurkerPosition: function(){
       var starX = 0;
       var starY = this.groundY - 11;
@@ -79,7 +111,6 @@ cc.Class({
     getNewStarPosition: function (offsetY) {
         var starX = 0;
         var starY = 0;
-        // 根据地平面位置和主角跳跃高度，随机得到一个星星的 y 坐标
         if(offsetY!=undefined)
           starY = this.groundY + 30 + offsetY;
         else
@@ -103,15 +134,16 @@ cc.Class({
           }
           this.score += Math.ceil(dt*this.speed*2);
           this.scoreDisplay.string=""+this.score;
-          if(this.restStar>0){
-            this.spawnNewStar();
-            this.restStar -- ;
+          if(this.restStar<=0){
+            var randomEvent = (10 * cc.random0To1())>5?true:false;
+            if(randomEvent)
+              this.spanTrapezoidStar(10);
+            else
+              this.spanSquareStar(12);
           }else{
-            this.spawnNewLurker();
-            this.spawnNewStar(35);
-            var willNextBeLurker = (10 * cc.random0To1())>8?true:false;
-            if(!willNextBeLurker){
-              this.generateStarGroup();
+            var randomEvent = (10 * cc.random0To1())>9?true:false;
+            if(randomEvent){
+              this.spawnNewLurker();
             }
           }
           return;

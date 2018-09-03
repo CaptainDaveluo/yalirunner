@@ -46,6 +46,7 @@ cc.Class({
         }
         if(this.node.x < this.game.player.x - 100){
           this.node.destroy();
+          this.game.lurkers.dequeue();
         }
       }
     },
